@@ -19,11 +19,20 @@ namespace IdentityApp
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), b => b.MigrationsAssembly("IdentityApp"));
             });
 
+            /*Enable HHTPS redirection - Before that, Generate a Test cerficate using the code below in the Package Manager Console in your Visual Studio:
+                    -dotnet dev-certs https --clean
+                    -dotnet dev-certs https --trust
+           Note: This certificate is used for DEVELOPMENT Only. For Production, A real certificate is required (Please, visit https://letsencrypt.org/ for more info)
+            */
+
+            builder.Services.AddHttpsRedirection(opts => { opts.HttpsPort = 44350; });
+
 
 
             var app = builder.Build();
 
             app.UseStaticFiles();
+            app.UseHttpsRedirection();
             //app.UseEndpoints(endpoints => {
             //    endpoints.MapDefaultControllerRoute();
             //    endpoints.MapRazorPages();
