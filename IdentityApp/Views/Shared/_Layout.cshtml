@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Identity App</title>
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" /> 
+</head>
+<body>
+    <div>
+       @*  The layout relies on a partial view to display content that will allow easy navigation between the 
+        different levels of content. For that, we also need to add a Razor View named _NavigationPartial.cshtml to Views/Shared *@
+        <partial name="_NavigationPartial"/>
+        @RenderBody()
+    </div>
+</body>
+</html>
