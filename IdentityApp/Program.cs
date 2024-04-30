@@ -13,11 +13,20 @@ namespace IdentityApp
             builder.Services.AddRazorPages();
 
 
-            var connectionString = builder.Configuration.GetConnectionString("MySqlConnection");
+            var mySqlConnectionString = builder.Configuration.GetConnectionString("MySqlConnection");
+            //var SqlServerConnectionString = builder.Configuration.GetConnectionString("SqlServer");
+
+            /*MySql*/
             builder.Services.AddDbContext<ProductDbContext>(options =>
             {
-                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), b => b.MigrationsAssembly("IdentityApp"));
+                options.UseMySql(mySqlConnectionString, ServerVersion.AutoDetect(mySqlConnectionString), b => b.MigrationsAssembly("IdentityApp"));
             });
+
+            /*Sql Server*/
+            //builder.Services.AddDbContext<ProductDbContext>(options =>
+            //{
+            //    options.UseSqlServer(SqlServerConnectionString, b => b.MigrationsAssembly("IdentityApp"));
+            //});
 
             /*Enable HHTPS redirection - Before that, Generate a Test cerficate using the code below in the Package Manager Console in your Visual Studio:
                     -dotnet dev-certs https --clean
