@@ -1,7 +1,7 @@
 using IdentityApp.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace IdentityApp
 {
@@ -47,9 +47,26 @@ namespace IdentityApp
                 options.UseMySql(mySqlIdentityConnection, ServerVersion.AutoDetect(mySqlIdentityConnection), b => b.MigrationsAssembly("IdentityApp"));
             });
 
-            
+            /*The AddDefaultIdentity method sets up the services using sensible default values. The generic type argument specifies the class
+              Identity will use to represent users. The default class is IdentityUser, which is included in the Identity package.
+              IdentityUser is known as the user class and is used by Identity to represent users. IdentityUser is the default user class
+              provided by Microsoft.
+              The AddEntityFrameworkStores method sets up data storage using EF Core, and generic type argument specifies the database context that 
+              will be used.
+              Identity uses wo kinds of datastore: the user store and the role store. The user store is the heart of Identity and is used to store
+              all of the user data, including email addresses, passwords, and so on.Confusingly, membership of roles is kept in the user store.
+              The role store contains additional information about roles that are used only in complex applications.
+             */
             builder.Services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<IdentityDbContext>();
+
+            /*
+             Note: Build the project before the migration
+                   EF Core requires a database migration, which will be used to create the database for Identity data. The following command create
+                   and then apply a migration for Identity:
+                add-migration InitialIdentityMigration -context IdenityDbContext
+                update-database -context IdentityDbContext
+             */
 
             /*-------------------------------------------------------------------------------------------------------------------------------------*/
 
