@@ -1,5 +1,7 @@
 using IdentityApp.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore
 
 namespace IdentityApp
 {
@@ -28,12 +30,36 @@ namespace IdentityApp
             //    options.UseSqlServer(SqlServerConnectionString, b => b.MigrationsAssembly("IdentityApp"));
             //});
 
-            /*Enable HHTPS redirection - Before that, Generate a Test cerficate using the code below in the Package Manager Console in your Visual Studio:
-                    -dotnet dev-certs https --clean
-                    -dotnet dev-certs https --trust
-           Note: This certificate is used for DEVELOPMENT Only. For Production, A real certificate is required (Please, visit https://letsencrypt.org/ for more info)
-            */
+           
 
+            /*-------------------------------------------------------------------------------------------------------------------------------------*/
+            /*Here, we configure the application to set up the database that will be used to store user data and to configure ASP.NET Core Identity*/
+            var mySqlIdentityConnection = builder.Configuration.GetConnectionString("IdentityMySqlConnection");
+
+            /*The AddDbContext method is used to set up an Entity Framework Core database context for Identity
+              The database context class is IdentityDbContext, which is included in the Identity packages and includes
+              details of the schemathat will be used to store identity data. 
+              Remember, IdetityDbContext class is defined in a different assembly, I have to tell EF Core 
+              to create databse migrations in the IdentityApp project
+             */
+            builder.Services.AddDbContext<IdentityDbContext>(options =>
+            {
+                options.UseMySql(mySqlIdentityConnection, ServerVersion.AutoDetect(mySqlIdentityConnection), b => b.MigrationsAssembly("IdentityApp"));
+            });
+
+            
+            builder.Services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<IdentityDbContext>();
+
+            /*-------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+            /*Enable HHTPS redirection - Before that, Generate a Test cerficate using the code below in the Package Manager Console in your Visual Studio:
+                   -dotnet dev-certs https --clean
+                   -dotnet dev-certs https --trust
+          Note: This certificate is used for DEVELOPMENT Only. For Production, A real certificate is required (Please, visit https://letsencrypt.org/ for more info)
+           */
             builder.Services.AddHttpsRedirection(opts => { opts.HttpsPort = 44350; });
 
 
@@ -46,6 +72,9 @@ namespace IdentityApp
             //    endpoints.MapDefaultControllerRoute();
             //    endpoints.MapRazorPages();
             //});
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllerRoute(
                name: "default",
