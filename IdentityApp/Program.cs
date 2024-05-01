@@ -85,19 +85,25 @@ namespace IdentityApp
 
             app.UseStaticFiles();
             app.UseHttpsRedirection();
-            //app.UseEndpoints(endpoints => {
+            
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            //app.UseEndpoints(endpoints =>
+            //{
             //    endpoints.MapDefaultControllerRoute();
             //    endpoints.MapRazorPages();
             //});
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            app.MapControllers(); // Map attribute-routed controllers
+            app.MapDefaultControllerRoute(); // Sets up the conventional route for MVC controllers
+            app.MapRazorPages(); // Map Razor Pages
 
-            app.MapControllerRoute(
-               name: "default",
-               pattern: "{controller=Home}/{action=Index}/{id?}");
+            //app.MapControllerRoute(
+            //   name: "default",
+            //   pattern: "{controller=Home}/{action=Index}/{id?}");
 
-           // app.MapGet("/", () => "Hello World!");
+            // app.MapGet("/", () => "Hello World!");
 
             app.Run();
         }
