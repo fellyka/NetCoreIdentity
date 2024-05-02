@@ -10,6 +10,8 @@ named _ViewStart.cshtml *@
     <link rel="stylesheet" href="/Identity/css/site.css" />
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="~/lib/qrcodejs/qrcode.min.js"></script>
+
   @*   <script src="/Identity/js/site.js" asp-append-version="true"></script> *@
 </head>
 
@@ -22,5 +24,18 @@ named _ViewStart.cshtml *@
         @RenderBody()
         @await RenderSectionAsync("Scripts", required: false)
     </div>
+
+  @*   QR Code  *@
+
+    <script type="text/javascript">
+        var element = document.getElementById("qrCode");
+        if (element !== null) {
+            new QRCode(element, {
+                text: document.getElementById("qrCodeData").getAttribute("data-url"),
+                width: 150, height: 150
+            });
+            element.previousElementSibling?.remove();
+        }
+    </script>
 </body>
 </html>
