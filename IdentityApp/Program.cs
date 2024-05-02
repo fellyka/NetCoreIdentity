@@ -2,6 +2,8 @@ using IdentityApp.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using IdentityApp.Services;
 
 namespace IdentityApp
 {
@@ -57,6 +59,10 @@ namespace IdentityApp
               all of the user data, including email addresses, passwords, and so on.Confusingly, membership of roles is kept in the user store.
               The role store contains additional information about roles that are used only in complex applications.
              */
+
+            /* ConsoleEmailSender class is being registered as the implementation of IEmailSender */
+            builder.Services.AddScoped<IEmailSender, ConsoleEmailSender>();
+
             builder.Services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<IdentityDbContext>();
 
@@ -70,14 +76,14 @@ namespace IdentityApp
 
             /*-------------------------------------------------------------------------------------------------------------------------------------*/
 
-
+           
 
             /*Enable HHTPS redirection - Before that, Generate a Test cerficate using the code below in the Package Manager Console in your Visual Studio:
                    -  dotnet dev-certs https --clean
                    -  dotnet dev-certs https --trust
           Note: This certificate is used for DEVELOPMENT Only. For Production, A real certificate is required (Please, visit https://letsencrypt.org/ for more info)
            */
-            builder.Services.AddHttpsRedirection(opts => { opts.HttpsPort = 44350; });
+            builder.Services.AddHttpsRedirection(opts => { opts.HttpsPort = 44351; });
 
 
 
