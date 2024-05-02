@@ -5,6 +5,13 @@ user with a consistent user interface. *@
 @* <div>Placeholder Content</div> *@
 
 <nav class="nav">
+
+   @*  The @if expression in the partial view determines whether there is a signed-in user by reading the
+    User.Identity.IsAuthenticated property.ASP.NET Core represents users with the ClaimsPrincipal
+    class and a ClaimsPrincipal object for the current user is available through the User property defined
+    by the Controller and RazorPageBase classes, which means the same features are available for the MVC
+    Framework and Razor Pages. *@
+
     @if (User.Identity.IsAuthenticated)
     {
         <a asp-area="Identity" asp-page="/Account/Manage/Index"

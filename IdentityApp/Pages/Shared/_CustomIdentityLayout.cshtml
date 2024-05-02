@@ -1,0 +1,26 @@
+﻿@* To use this view, create the Areas/Identity/Pages folder and add to it a Razor View Start file
+named _ViewStart.cshtml *@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Identity App</title>
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />  
+    <link rel="stylesheet" href="/Identity/css/site.css" />
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
+  @*   <script src="/Identity/js/site.js" asp-append-version="true"></script> *@
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-secondary">
+        <a class="navbar-brand text-white">IdentityApp</a>
+        <div class="text-white"><partial name="_LoginPartial" /></div>
+    </nav>
+    <div class="m-2">
+        @RenderBody()
+        @await RenderSectionAsync("Scripts", required: false)
+    </div>
+</body>
+</html>
