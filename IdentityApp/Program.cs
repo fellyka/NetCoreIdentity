@@ -74,7 +74,7 @@ namespace IdentityApp
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
-                options.SignIn.RequireConfirmedAccount = true;
+               // options.SignIn.RequireConfirmedAccount = true;
             }).AddEntityFrameworkStores<IdentityDbContext>();
 
             /*
@@ -123,6 +123,6 @@ namespace IdentityApp
             // app.MapGet("/", () => "Hello World!");
 
             app.Run();
-        }
+        }//145
     }
 }//35
