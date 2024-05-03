@@ -63,8 +63,18 @@ namespace IdentityApp
             /* ConsoleEmailSender class is being registered as the implementation of IEmailSender */
             builder.Services.AddScoped<IEmailSender, ConsoleEmailSender>();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<IdentityDbContext>();
+            builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+            {
+                /*Password configuration
+                  Note: Restrictive password policies are falling out of use, with simple minimum length requirements combined with the use of two-factor authentication.
+                  In the following code, I have kept the length requirement to its default value and disabled the other restrictions.
+                 */
+                options.Password.RequiredLength = 6;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+            }).AddEntityFrameworkStores<IdentityDbContext>();
 
             /*
              Note: Build the project before the migration
