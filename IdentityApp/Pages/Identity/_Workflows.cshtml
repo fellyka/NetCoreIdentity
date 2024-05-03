@@ -1,4 +1,6 @@
-﻿@model (string workflow, string theme)
+﻿@* This partial view will display navigation buttons that will lead to different workflows. *@
+
+@model (string workflow, string theme)
 @{
     Func<string, string> getClass = (string feature) =>
     feature != null && feature.Equals(Model.workflow) ? "active" : "";
